@@ -1,0 +1,14 @@
+---
+- name: Install MariaDB
+  yum:
+    name: mariadb-server
+    state: present
+- name: Configure MariaDB
+  template:
+    src: mariadb.cnf.j2
+    dest: /etc/my.cnf.d/openstack.cnf
+- name: Start and enable MariaDB service
+  systemd:
+    name: mariadb
+    enabled: yes
+    state: started

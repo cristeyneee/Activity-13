@@ -1,0 +1,16 @@
+---
+- name: Configure COntroller Node
+  hosts: controller
+  roles:
+    - ntp
+    - openstack_packages
+    - sql_database
+    - message_queue
+    - memcached
+    - etcd
+
+- name: Configure Compute Node
+  hosts: compute
+  roles:
+    - ntp
+    - openstack_packages
