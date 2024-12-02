@@ -1,0 +1,25 @@
+- name: Ensure software-properties-common is installed
+  become: yes
+  apt:
+    name: software-properties-common
+    state: present
+
+- name: Add OpenStack repository
+  become: yes
+  shell: |
+    add-apt-repository -y cloud-archive:wallaby
+  when: ansible_distribution_version == "20.04"
+
+- name: Update package repository cache
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: Install OpenStack client packages
+  become: yes
+  apt:
+    name:
+      - python3-openstackclient
+      - python3-pip
+    state: present
+

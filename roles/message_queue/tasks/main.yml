@@ -1,0 +1,23 @@
+---
+- name: Install RabbitMQ server
+  package:
+    name: rabbitmq-server
+    state: present
+
+- name: Enable and start RabbitMQ service
+  service:
+    name: rabbitmq-server
+    state: started
+    enabled: yes
+
+- name: Add OpenStack RabbitMQ user
+  command: >
+    rabbitmqctl add_user openstack strongpassword
+  args:
+    creates: /etc/rabbitmq/rabbitmq-users-configured
+
+- name: Configure OpenStack user permissions
+  command: >
+    rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+  args:
+    creates: /etc/rabbitmq/rabbitmq-permissions-configured

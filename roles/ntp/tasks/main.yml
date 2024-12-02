@@ -1,11 +1,13 @@
 ---
-- name: Install NTP package
-  yum:
+- name: Install Chrony
+  become: yes
+  package:
     name: chrony
     state: present
 
-- name: Enable and start NTP service
-  systemd:
+- name: Enable and start Chrony service
+  become: yes
+  service:
     name: chronyd
-    enabled: yes
     state: started
+    enabled: yes

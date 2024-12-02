@@ -1,0 +1,21 @@
+---
+- name: Install memcached
+  package:
+    name: memcached
+    state: present
+
+- name: Configure memcached for OpenStack
+  lineinfile:
+    path: /etc/memcached.conf
+    regexp: '-l 127.0.0.1'
+    line: '-l 0.0.0.0'
+    state: present
+  notify:
+    - Restart memcached
+
+- name: Enable and start memcached service
+  service:
+    name: memcached
+    state: started
+    enabled: yes
+
